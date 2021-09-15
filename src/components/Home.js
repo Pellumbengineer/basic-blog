@@ -12,7 +12,11 @@ function Home() {
       id: 3,
     },
   ])
-  const handleClick = () => {}
+
+  const handleDelete = (id) => {
+    const newBlogs = blogs.filter((blog) => blog.id !== id)
+    setBlogs(newBlogs)
+  }
 
   return (
     <div className='mx-auto'>
@@ -22,7 +26,7 @@ function Home() {
           This is the best blog webite in the world!
         </p>
       </div>
-      <BlogList blogs={blogs} />
+      <BlogList blogs={blogs} handleDelete={handleDelete} />
     </div>
   )
 }
