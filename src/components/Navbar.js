@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   return (
@@ -8,18 +9,18 @@ const Navbar = () => {
           The Pellumb Blog
         </h1>
         <div className='ml-auto'>
-          <a
-            href='/'
+          <Link
+            to='/'
             className='inline-flex items-center py-1 px-3 ml-4 text-white hover:bg-red-800 rounded-md bg-red-400'
           >
             Home
-          </a>
-          <a
-            href='/create'
+          </Link>
+          <Link
+            to='create'
             className='inline-flex items-center py-1 px-3 ml-1 text-white hover:bg-red-800 rounded-md bg-red-400'
           >
             New Blog
-          </a>
+          </Link>
         </div>
       </div>
     </header>
