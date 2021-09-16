@@ -1,14 +1,17 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const BlogList = ({ blogs, handleDelete }) => {
   return blogs.map((blog, idx) => (
     <div
-      className='relative border hover:shadow-lg p-4 rounded-md z-1 mx-2 mb-2'
+      className='relative border hover:shadow-lg hover:border-red-300 p-4 rounded-md z-1 mx-2 mb-2'
       key={blog.id}
     >
-      <h1 className='font-serif text-red-500 text-3xl'>{blog.title}</h1>
-      <h2 className='mt-1'>Writen by {blog.author}</h2>
-      {/* <p className='text-black my-2'>{blog.body}</p> */}
+      <Link to={`/blogs/${blog.id}`}>
+        <h1 className='font-serif text-red-500 text-3xl'>{blog.title}</h1>
+        <h2 className='mt-1'>Writen by {blog.author}</h2>
+        {/* <p className='text-black my-2'>{blog.body}</p> */}
+      </Link>
       <button
         className='bg-red-500 hover:bg-red-800 px-2 py-1 rounded-md text-white absolute bottom-2 right-2'
         onClick={() => handleDelete(blog.id)}
