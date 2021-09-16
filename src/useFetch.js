@@ -9,25 +9,30 @@ const useFetch = (url) => {
     // npx json-server --watch data/db.json --port 8000
     const abortCont = new AbortController()
 
-    fetch(url, { signal: abortCont.signal })
-      .then((res) => {
-        if (!res.ok) {
-          throw Error('Could not fetch the data from this resource!')
-        }
-        return res.json()
-      })
-      .then((data) => {
-        setData(data)
-        setIsLoading(false)
-        setError(null)
-      })
-      .catch((err) => {
-        if (!err.name === 'AbortError') {
+    setTimeout(() => {
+      fetch(url, { signal: abortCont.signal })
+        .then((res) => {
+          if (!res.ok) {
+            // error coming back from server
+            throw Error('could not fetch the data for that resource')
+          }
+          return res.json()
+        })
+        .then((data) => {
           setIsLoading(false)
-          setError(err.message)
-        }
-      })
-
+          setData(data)
+          setError(null)
+        })
+        .catch((err) => {
+          if (err.name === 'AbortError') {
+            console.log('fetch aborted')
+          } else {
+            // auto catches network / connection error
+            setIsLoading(false)
+            setError(err.message)
+          }
+        })
+    }, 1000)
     return () => abortCont.abort()
   })
 

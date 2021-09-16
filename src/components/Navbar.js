@@ -16,7 +16,7 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            to='create'
+            to='/create'
             className='inline-flex items-center py-1 px-3 ml-1 text-white hover:bg-red-800 rounded-md bg-red-400'
           >
             New Blog
