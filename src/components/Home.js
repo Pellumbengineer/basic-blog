@@ -1,35 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import useFetch from '../useFetch'
 import BlogList from './BlogList'
 
 function Home() {
-  const [blogs, setBlogs] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const {
+    data: blogs,
+    isLoading,
+    error,
+  } = useFetch('http://localhost:8000/blogs')
 
   const handleDelete = (id) => {
     const newBlogs = blogs.filter((blog) => blog.id !== id)
-    setBlogs(newBlogs)
+    // setBlogs(newBlogs)
   }
-
-  useEffect(() => {
-    // npx json-server --watch data/db.json --port 8000
-    fetch('http://localhost:8000/blogs')
-      .then((res) => {
-        if (!res.ok) {
-          throw Error('Could not fetch the data from this resource!')
-        }
-        return res.json()
-      })
-      .then((data) => {
-        setBlogs(data)
-        setIsLoading(false)
-        setError(null)
-      })
-      .catch((err) => {
-        setIsLoading(false)
-        setError(err.message)
-      })
-  })
 
   return (
     <div className='mx-auto'>
