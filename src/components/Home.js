@@ -4,6 +4,7 @@ import BlogList from './BlogList'
 function Home() {
   const [blogs, setBlogs] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   const handleDelete = (id) => {
     const newBlogs = blogs.filter((blog) => blog.id !== id)
@@ -11,15 +12,24 @@ function Home() {
   }
 
   useEffect(() => {
+    // npx json-server --watch data/db.json --port 8000
     fetch('http://localhost:8000/blogs')
       .then((res) => {
+        if (!res.ok) {
+          throw Error('Could not fetch the data from this resource!')
+        }
         return res.json()
       })
       .then((data) => {
         setBlogs(data)
         setIsLoading(false)
+        setError(null)
       })
-  }, [])
+      .catch((err) => {
+        setIsLoading(false)
+        setError(err.message)
+      })
+  })
 
   return (
     <div className='mx-auto'>
@@ -29,6 +39,13 @@ function Home() {
           This is the best blog webite in the world!
         </p>
       </div>
+      {error && (
+        <div className='bg-red-400 rounded-lg mx-auto px-3 py-3 shadow-md'>
+          {' '}
+          <h1 className='mr-2 inline-block'>Error:</h1>
+          <p className='inline-block'>{error}</p>{' '}
+        </div>
+      )}
       {isLoading && (
         <svg
           xmlns='http://www.w3.org/2000/svg'
