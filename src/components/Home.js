@@ -1,14 +1,11 @@
+import { JSON_API } from '../constants/constantData'
 import useFetch from '../useFetch'
 import BlogList from './BlogList'
 import ErrorMessage from './ErrorMessage'
 import Loader from './Loader'
 
 function Home() {
-  const {
-    data: blogs,
-    isLoading,
-    error,
-  } = useFetch('http://localhost:8000/blogs')
+  const { data: blogs, isLoading, error } = useFetch(`${JSON_API}/blogs`)
 
   const handleDelete = (id) => {
     // const newBlogs = blogs.filter((blog) => blog.id !== id)
