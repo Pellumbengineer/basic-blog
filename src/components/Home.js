@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom'
 import { JSON_API } from '../constants/constantData'
 import useFetch from '../useFetch'
 import BlogList from './BlogList'
@@ -5,9 +6,15 @@ import ErrorMessage from './ErrorMessage'
 import Loader from './Loader'
 
 function Home() {
+  const history = useHistory()
   const { data: blogs, isLoading, error } = useFetch(`${JSON_API}/blogs`)
 
   const handleDelete = (id) => {
+    fetch(`${JSON_API}/blogs/${id}`, {
+      method: 'DELETE',
+    }).then(() => {
+      history.push('/')
+    })
     // const newBlogs = blogs.filter((blog) => blog.id !== id)
     // setBlogs(newBlogs)
   }
